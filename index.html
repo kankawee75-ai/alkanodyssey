@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#15233d" />
+  <title>The AlkanOdyssey</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main id="game-shell" aria-label="The AlkanOdyssey game">
+    <canvas id="game" width="960" height="540" aria-label="Game screen"></canvas>
+    <section id="hud" aria-label="Game status">
+      <div id="topbar"><div class="status-block"><div id="health"></div><div id="xp"></div><div id="levelReadout"></div></div><div class="status-block right"><div id="coins">● 0</div><div id="crystals">✦ 0</div><button id="saveBtn">SAVE</button></div></div>
+      <div id="questTracker"></div>
+      <div id="missionProgress"></div>
+      <canvas id="miniMap" width="150" height="72" aria-label="Mini map"></canvas>
+      <button id="progressButton" aria-label="Open progress dashboard">PROGRESS</button>
+      <button id="profileButton" aria-label="Open player profile">PROFILE</button>
+      <button id="hintButton" aria-label="Show controls">?</button>
+      <div id="hint">A / D or ← / → MOVE · SPACE JUMP · SHIFT RUN · E TALK</div>
+    </section>
+    <section id="startMenu" class="panel menu">
+      <div class="logo"><span>THE</span> ALKAN<span>ODYSSEY</span></div>
+      <p class="tagline">Restore the Lost IUPAC Crystals</p>
+      <div class="menu-buttons">
+        <button id="newGame">▶ Start Adventure</button>
+        <button id="demoGame">★ Competition Demo</button>
+        <button id="continueGame">📖 Journal</button>
+        <button id="settingsOpen">⚙ Settings</button>
+        <button id="avatarOpen">CUSTOMIZE AVATAR</button>
+        <button id="practiceOpen">PRACTICE MODE</button>
+        <button id="dailyOpen">DAILY CHALLENGE</button><button id="teacherOpen">TEACHER MODE</button><button id="learningOpen">LEARNING DASHBOARD</button>
+        <button id="creditsOpen">CREDITS</button><button id="statsOpen">STATISTICS</button><button id="galleryOpen">GALLERY</button>
+        <button id="achievementOpen">🏆 Achievement</button>
+        <button id="exitGame">❌ Exit</button>
+      </div>
+      <p class="keys">v1.0.0 · MOVE · INTERACT · LEARN · RESTORE</p>
+    </section>
+    <section id="difficultyModal" class="panel modal hidden"><h2>CHOOSE YOUR PATH</h2><p>Difficulty changes molecule size, branching, hints, timers, and rewards.</p><button data-difficulty="easy">EASY · EXPLORER</button><button data-difficulty="normal">NORMAL · SCHOLAR</button><button data-difficulty="hard">HARD · MASTER ALKANIST</button></section>
+    <section id="settings" class="panel modal hidden"><h2>SETTINGS</h2><label>Music <input id="musicVolume" type="range" min="0" max="100" value="35"></label><label>Sound Effects <input id="soundVolume" type="range" min="0" max="100" value="55"></label><label>Text Speed <input id="textSpeed" type="range" min="10" max="70" value="28"></label><label>Language <select id="languageSelect"><option value="en">English</option><option value="th">ไทย</option></select></label><label class="toggle">Fullscreen <input id="fullscreenToggle" type="checkbox"></label><label class="toggle">Screen Shake <input id="screenShake" type="checkbox" checked></label><label class="toggle">Sound Enabled <input id="soundEnabled" type="checkbox" checked></label><label class="toggle">Music Enabled <input id="musicEnabled" type="checkbox" checked></label><button id="settingsControls">CONTROLS</button><button id="resetProgress">RESET SAVE DATA</button><button class="close">BACK</button></section>
+    <section id="dialogue" class="dialogue hidden"><div id="portrait">C</div><div class="dialogue-copy"><h3 id="speaker">Professor Carbon</h3><p id="dialogueText"></p><div class="dialogue-actions"><button id="dialogueBack">BACK</button><button id="dialogueContinue">CONTINUE</button><button id="dialogueAuto">AUTO: OFF</button><button id="dialogueHistory">HISTORY</button><button id="dialogueSkip">SKIP</button></div></div></section>
+    <section id="journal" class="panel modal hidden"><h2>CHEMISTRY NOTEBOOK</h2><input id="journalSearch" type="search" placeholder="Search rules and examples"><div id="journalContent"></div><button id="journalBookmark">BOOKMARK PAGE</button><button class="close">CLOSE</button></section>
+    <section id="inventory" class="panel modal hidden"><h2>INVENTORY</h2><div id="inventoryContent"></div><button class="close">CLOSE</button></section>
+    <section id="mapModal" class="panel modal hidden">
+      <h2>WORLD MAP</h2>
+      <div class="map-grid">
+        <div class="map-node active">Carbon Forest</div>
+        <div class="map-node">Carbon Canyon</div>
+        <div class="map-node">Branch Forest</div>
+        <div class="map-node">Crystal Library</div>
+        <div class="map-node">Temple of IUPAC</div>
+      </div>
+      <p id="mapNote" class="map-note">Restore IUPAC crystals to unlock each route.</p>
+      <button class="close">CLOSE</button>
+    </section>
+    <section id="pauseModal" class="panel modal hidden">
+      <h2>PAUSED</h2>
+      <p>Adventure progress is saved automatically.</p>
+      <button id="resumeGame">RESUME</button><button id="pauseMap">WORLD MAP</button><button id="pauseSave">SAVE GAME</button><button class="close">BACK TO GAME</button>
+    </section>
+    <section id="puzzleModal" class="panel modal hidden">
+      <h2>Main Chain Hunter</h2>
+      <p id="puzzlePrompt"></p>
+      <div id="puzzleStructure"></div>
+      <div id="puzzleOptions"></div>
+      <div id="puzzleFeedback"></div>
+      <button class="close">CLOSE</button>
+    </section>
+    <section id="numberPuzzle" class="panel modal hidden" aria-label="Carbon Number Rush puzzle">
+      <h2>CARBON NUMBER RUSH</h2>
+      <p id="numberPrompt">Drag the number tiles onto the parent chain.</p>
+      <div id="numberChain" class="number-chain"></div>
+      <div id="numberTiles" class="number-tiles"></div>
+      <p id="numberFeedback" class="number-feedback"></p>
+      <div class="dialogue-actions"><button id="numberCheck">CHECK NUMBERING</button><button id="numberRetry" class="hidden">TRY AGAIN</button><button id="numberClose">LEAVE PUZZLE</button></div>
+    </section>
+    <section id="iupacPuzzleModal" class="panel modal hidden" aria-label="IUPAC Crystal Door puzzle">
+      <h2>IUPAC CRYSTAL DOOR</h2><p id="iupacQuestion"></p><div id="iupacFormula" class="puzzle-structure-text"></div><div id="iupacChoices"></div><p id="iupacFeedback"></p><button id="iupacClose">LEAVE DOOR</button>
+    </section>
+    <section id="bossModal" class="panel modal hidden" aria-label="Carbon Guardian chemistry trial"><h2>CARBON GUARDIAN</h2><div id="bossEnergy"></div><p id="bossPrompt"></p><div id="bossChoices"></div><p id="bossFeedback"></p><button id="bossLeave">LEAVE TRIAL</button></section>
+    <section id="finalExamModal" class="panel modal hidden" aria-label="Final IUPAC exam"><h2>FINAL IUPAC EXAM</h2><p id="examProgress"></p><p id="examPrompt"></p><div id="examChoices"></div><p id="examFeedback"></p><button id="examLeave">LEAVE EXAM</button></section>
+    <section id="certificateModal" class="panel modal hidden"><h2>IUPAC EXPLORER CERTIFICATE</h2><div id="certificateContent"></div><button class="close">CLOSE</button></section>
+    <section id="tutorialModal" class="panel modal hidden"><h2 id="tutorialTitle">WELCOME, ALKANIST</h2><p id="tutorialText"></p><div class="dialogue-actions"><button id="tutorialNext">NEXT</button><button id="tutorialSkip">SKIP TUTORIAL</button></div></section>
+    <section id="progressModal" class="panel modal hidden"><h2>PLAYER PROGRESS</h2><div id="progressContent"></div><button class="close">CLOSE</button></section>
+    <section id="achievementModal" class="panel modal hidden"><h2>THE ALKANODYSSEY</h2><p><strong>Educational Adventure Game</strong></p><p>Game-based learning · IUPAC practice · Interactive chemistry exploration</p><div id="achievementContent"></div><button class="close">CLOSE</button></section>
+    <section id="practiceModal" class="panel modal hidden"><h2>IUPAC PRACTICE MODE</h2><p>Choose a skill for unlimited generated questions.</p><button data-practice="parent">Parent Chain</button><button data-practice="numbering">Numbering</button><button data-practice="branches">Branches</button><button data-practice="prefixes">Prefixes & Order</button><button data-practice="naming">Complete Naming</button><button class="close">CLOSE</button></section>
+    <section id="avatarModal" class="panel modal hidden"><h2>ALKANIST AVATAR CREATOR</h2><div id="avatarPreview" class="avatar-preview">A</div><div class="avatar-options"><label>Face <select data-avatar="face"><option>Round</option><option>Oval</option><option>Square</option></select></label><label>Hair Style <select data-avatar="hair"></select></label><label>Hair Color <input data-avatar="hairColor" type="color" value="#1e2230"></label><label>Eye Shape <select data-avatar="eyes"><option>Round</option><option>Focused</option><option>Bright</option></select></label><label>Eye Color <input data-avatar="eyeColor" type="color" value="#4cc9ff"></label><label>Eyebrows <select data-avatar="eyebrows"><option>Natural</option><option>Bold</option><option>Curved</option></select></label><label>Skin Tone <input data-avatar="skin" type="color" value="#d99a6c"></label><label>Mouth <select data-avatar="mouth"><option>Smile</option><option>Calm</option><option>Determined</option></select></label><label>Outfit <select data-avatar="clothing"><option>Blue Lab Coat</option><option>Explorer Coat</option><option>Crystal Cape</option></select></label><label>Shoes <select data-avatar="shoes"><option>Brown Boots</option><option>Trail Boots</option><option>Crystal Shoes</option></select></label><label>Gloves <select data-avatar="gloves"><option>None</option><option>Lab Gloves</option><option>Explorer Gloves</option></select></label><label>Cape <select data-avatar="cape"><option>None</option><option>Blue Cape</option><option>Crystal Cape</option></select></label><label>Accessory <select data-avatar="accessory"><option>Safety Goggles</option><option>Star Pin</option><option>Crystal Lens</option></select></label><label>Pet <select data-avatar="pet"><option>None</option><option>Firefly</option><option>Mini Molecule</option><option>Crystal Fox</option></select></label></div><button id="avatarSave">SAVE LOOK</button><button class="close">CLOSE</button></section>
+    <section id="profileModal" class="panel modal hidden"><h2>ALKANIST PROFILE</h2><div id="profileContent"></div><button class="close">CLOSE</button></section>
+    <section id="adaptiveModal" class="panel modal hidden"><h2>LEARNING DASHBOARD</h2><div id="adaptiveContent"></div><button id="reviewOpen">REVIEW MISTAKES</button><button class="close">CLOSE</button></section>
+    <section id="teacherModal" class="panel modal hidden"><h2>TEACHER DASHBOARD</h2><div id="teacherContent"></div><button id="teacherCsv">EXPORT CSV</button><button id="teacherPrint">PRINT / PDF SUMMARY</button><button class="close">CLOSE</button></section>
+    <section id="reviewModal" class="panel modal hidden"><h2>INCORRECT ANSWER REVIEW</h2><div id="reviewContent"></div><button class="close">CLOSE</button></section>
+    <section id="reportModal" class="panel modal hidden"><h2>FINAL LEARNING REPORT</h2><div id="reportContent"></div><button id="reportPrint">PRINT / PDF REPORT</button><button class="close">CLOSE</button></section>
+    <section id="creditsModal" class="panel modal hidden"><h2>CREDITS</h2><div id="creditsContent"><article class="entry"><strong>Development</strong><p>The AlkanOdyssey Team</p></article><article class="entry"><strong>Game Design & Programming</strong><p>HTML5 Canvas, CSS3, JavaScript ES6</p></article><article class="entry"><strong>Educational Content</strong><p>IUPAC alkane-naming learning design</p></article><article class="entry"><strong>Chemistry References</strong><p>IUPAC nomenclature principles for acyclic hydrocarbons</p></article><article class="entry"><strong>Artwork & Audio</strong><p>Original local pixel sprite atlas and synthesized Web Audio effects</p></article><article class="entry"><strong>Special Thanks</strong><p>Teachers, students, and chemistry explorers.</p></article></div><button class="close">RETURN TO MENU</button></section>
+    <section id="statisticsModal" class="panel modal hidden"><h2>STATISTICS</h2><div id="statisticsContent"></div><button class="close">CLOSE</button></section>
+    <section id="galleryModal" class="panel modal hidden"><h2>GALLERY</h2><div id="galleryContent"></div><button class="close">CLOSE</button></section>
+    <section id="endingActions" class="ending-actions hidden"><button id="viewCertificate">VIEW CERTIFICATE</button><button id="viewReport">LEARNING REPORT</button><button id="returnMenu">RETURN TO MAIN MENU</button></section>
+    <section id="achievement" class="achievement hidden"></section>
+    <section id="touchControls"><button data-key="left">◀</button><button data-key="right">▶</button><button data-key="jump">▲</button><button data-key="run">RUN</button><button data-key="action">E</button></section>
+  </main>
+  <script src="asset-manager.js"></script>
+  <script src="scene-manager.js"></script>
+  <script src="quest-manager.js"></script>
+  <script src="save-manager.js"></script>
+  <script src="iupac-puzzle-manager.js"></script>
+  <script src="boss-manager.js"></script>
+  <script src="final-exam-manager.js"></script>
+  <script src="demo-manager.js"></script>
+  <script src="tutorial-manager.js"></script>
+  <script src="achievement-manager.js"></script>
+  <script src="learning-manager.js"></script>
+  <script src="avatar-manager.js"></script>
+  <script src="analytics-manager.js"></script>
+  <script src="adaptive-learning-manager.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

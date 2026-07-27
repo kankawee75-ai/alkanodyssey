@@ -1,0 +1,7 @@
+[
+  {"level":1,"name":"Methane","formula":"CH4","carbonAtoms":1,"hydrogenAtoms":4},
+  {"level":2,"name":"Ethane","formula":"C2H6","carbonAtoms":2,"hydrogenAtoms":6},
+  {"level":3,"name":"Propane","formula":"C3H8","carbonAtoms":3,"hydrogenAtoms":8},
+  {"level":4,"name":"Butane","formula":"C4H10","carbonAtoms":4,"hydrogenAtoms":10},
+  {"level":5,"name":"Pentane","formula":"C5H12","carbonAtoms":5,"hydrogenAtoms":12}
+]
