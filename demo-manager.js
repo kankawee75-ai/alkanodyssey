@@ -1,0 +1,3 @@
+/* Competition demo state grants a safe, explicit shortcut without replacing campaign saves. */
+(function(){class DemoManager{constructor(){this.active=false;}start(game,sceneManager){this.active=true;game.demoMode=true;game.chapter=5;game.chapter2Unlocked=true;game.chapter3Unlocked=true;game.chapter4Unlocked=true;game.chapter5Unlocked=true;game.worldMapUnlocked=true;game.journalUnlocked=true;game.mainChainRuleUnlocked=true;game.lowestNumberRuleUnlocked=true;game.abilities={mainChainVision:true,numberScanner:true,branchDetector:true};[1,2,3,4,5].forEach(chapter=>sceneManager.unlock(chapter));}snapshot(){return {active:this.active};}restore(state){this.active=!!(state&&state.active);}}
+window.DemoManager=DemoManager;}());
